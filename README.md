@@ -78,3 +78,10 @@ js-ecommerce/
 ├── frontend/
 ├── docs/
 └── README.md
+
+## Workflow
+
+- `main` branch contains stable code
+- `develop` branch is used for active development
+- Each project phase is completed and tested before merging to `main`
+
