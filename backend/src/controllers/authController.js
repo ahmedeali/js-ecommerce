@@ -82,6 +82,12 @@ const loginUser = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+// @desc    Get user profile
+// @route   GET /api/auth/profile
+// @access  Private
+const getUserProfile = async (req, res) => {
+    res.status(200).json(req.user);
+  };
+  
 
-
-module.exports = { registerUser, loginUser };
+module.exports = { registerUser, loginUser, getUserProfile  };
