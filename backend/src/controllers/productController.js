@@ -29,7 +29,34 @@ const getProductById = async (req, res) => {
   }
 };
 
+// @desc    Create a product
+// @route   POST /api/products
+// @access  Private/Admin
+const createProduct = async (req, res) => {
+  try {
+    const { name, description, price, countInStock, image } = req.body;
+
+    const product = new Product({
+      name,
+      description,
+      price,
+      countInStock,
+      image,
+      user: req.user._id, // admin creating it
+    });
+
+    const createdProduct = await product.save();
+
+    res.status(201).json(createdProduct);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
 module.exports = {
   getProducts,
   getProductById,
+  createProduct,
 };
+
