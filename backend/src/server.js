@@ -1,3 +1,5 @@
+const productRoutes = require('./routes/productRoutes');
+
 const authRoutes = require('./routes/authRoutes');
 
 require('dotenv').config();
@@ -16,6 +18,7 @@ app.get('/health', (req, res) => {
 
 // 👇 CONNECT ROUTES HERE
 app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
 
 const PORT = process.env.PORT || 5000;
 
