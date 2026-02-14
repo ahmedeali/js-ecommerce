@@ -1,3 +1,5 @@
+const orderRoutes = require('./routes/orderRoutes');
+
 const productRoutes = require('./routes/productRoutes');
 
 const authRoutes = require('./routes/authRoutes');
@@ -19,6 +21,8 @@ app.get('/health', (req, res) => {
 // 👇 CONNECT ROUTES HERE
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 
