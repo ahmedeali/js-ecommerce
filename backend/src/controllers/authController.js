@@ -1,5 +1,5 @@
 const asyncHandler = require('../middleware/asyncHandler');
-
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
@@ -36,7 +36,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 });
 
-const jwt = require('jsonwebtoken');
+
 
 // @desc    Login user
 // @route   POST /api/auth/login
