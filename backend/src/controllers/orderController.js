@@ -68,7 +68,43 @@ const getMyOrders = async (req, res) => {
   }
 };
 
+// @desc    Update order status
+// @route   PUT /api/orders/:id/status
+// @access  Admin
+const updateOrderStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // 🔥 If cancelling → restore stock
+    if (status === 'cancelled' && order.status !== 'cancelled') {
+      for (const item of order.orderItems) {
+        const product = await Product.findById(item.product);
+
+        if (product) {
+          product.countInStock += item.qty;
+          await product.save();
+        }
+      }
+    }
+
+    order.status = status;
+    const updatedOrder = await order.save();
+
+    res.status(200).json(updatedOrder);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
 module.exports = {
   createOrder,
   getMyOrders,
+  updateOrderStatus,
 };
