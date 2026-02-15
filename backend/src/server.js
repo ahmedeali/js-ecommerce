@@ -1,8 +1,11 @@
+const adminRoutes = require('./routes/adminRoutes');
+
 const orderRoutes = require('./routes/orderRoutes');
 
 const productRoutes = require('./routes/productRoutes');
 
 const authRoutes = require('./routes/authRoutes');
+
 
 require('dotenv').config();
 const express = require('express');
@@ -22,6 +25,8 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/admin', adminRoutes);
+
 
 
 const PORT = process.env.PORT || 5000;
