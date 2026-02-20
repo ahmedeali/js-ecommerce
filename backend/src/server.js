@@ -1,3 +1,6 @@
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
+
 const { errorHandler } = require('./middleware/errorMiddleware');
 
 const adminRoutes = require('./routes/adminRoutes');
@@ -28,6 +31,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 // Global error handler
 app.use(errorHandler);
