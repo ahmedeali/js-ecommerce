@@ -85,3 +85,5 @@ js-ecommerce/
 - `develop` branch is used for active development
 - Each project phase is completed and tested before merging to `main`
 
+## Live API
+https://js-ecommerce.onrender.com

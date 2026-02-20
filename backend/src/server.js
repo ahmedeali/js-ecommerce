@@ -1,3 +1,4 @@
+const cors = require('cors')
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 
@@ -19,6 +20,7 @@ const connectDB = require('./config/db');
 connectDB();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Health check route
