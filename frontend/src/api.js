@@ -1,0 +1,1 @@
+export const API_BASE = 'https://js-ecommerce.onrender.com'
