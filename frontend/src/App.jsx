@@ -65,8 +65,10 @@ function App() {
       body: JSON.stringify({
         orderItems: [
           {
-            product: product._id,
-            quantity: quantity
+            name: product.name,
+            qty: quantity,
+            price: product.price,
+            product: product._id
           }
         ]
       })
