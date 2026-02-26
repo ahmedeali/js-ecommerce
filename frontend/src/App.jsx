@@ -77,15 +77,10 @@ function App() {
     const data = await res.json()
   
     if (res.ok) {
-  
       alert('Order created successfully')
-  
       window.location.reload()
-  
     } else {
-  
       alert(data.message)
-  
     }
   }
 
