@@ -11,6 +11,7 @@ const Order = require('../models/Order');
 // @route   POST /api/orders
 // @access  Private
 const createOrder = asyncHandler(async (req, res) => {
+
   const { orderItems } = req.body;
 
   if (!orderItems || orderItems.length === 0) {
@@ -18,8 +19,10 @@ const createOrder = asyncHandler(async (req, res) => {
     throw new Error('No order items');
   }
 
-  // Stock control
+  let totalPrice = 0;
+
   for (const item of orderItems) {
+
     const product = await Product.findById(item.product);
 
     if (!product) {
@@ -27,27 +30,28 @@ const createOrder = asyncHandler(async (req, res) => {
       throw new Error('Product not found');
     }
 
-    if (product.countInStock < item.qty) {
+    if (product.stock < item.quantity) {
       res.status(400);
       throw new Error(`Not enough stock for ${product.name}`);
     }
 
-    product.countInStock -= item.qty;
+    // Reduce stock
+    product.stock -= item.quantity;
     await product.save();
-  }
 
-  const totalPrice = orderItems.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
-  );
+    // Calculate price from DB
+    totalPrice += product.price * item.quantity;
+
+  }
 
   const order = await Order.create({
     user: req.user._id,
     orderItems,
-    totalPrice,
+    totalPrice
   });
 
   res.status(201).json(order);
+
 });
 
 
@@ -80,7 +84,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
       const product = await Product.findById(item.product);
 
       if (product) {
-        product.countInStock += item.qty;
+        product.stock += item.quantity;
         await product.save();
       }
     }
