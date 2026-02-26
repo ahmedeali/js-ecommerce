@@ -30,17 +30,17 @@ const createOrder = asyncHandler(async (req, res) => {
       throw new Error('Product not found');
     }
 
-    if (product.stock < item.quantity) {
+    if (product.stock < item.qty) {
       res.status(400);
       throw new Error(`Not enough stock for ${product.name}`);
     }
 
     // Reduce stock
-    product.stock -= item.quantity;
+    product.stock -= item.qty;
     await product.save();
 
     // Calculate price from DB
-    totalPrice += product.price * item.quantity;
+    totalPrice += product.price * item.qty;
 
   }
 
@@ -84,7 +84,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
       const product = await Product.findById(item.product);
 
       if (product) {
-        product.stock += item.quantity;
+        product.stock += item.qty;
         await product.save();
       }
     }
