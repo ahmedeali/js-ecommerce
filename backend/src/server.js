@@ -19,7 +19,12 @@ const connectDB = require("./config/db");
 connectDB();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://js-ecommerce-frontend.onrender.com"
+  ]
+}));
 app.use(express.json());
 
 // Health check route
